@@ -30,20 +30,21 @@ public class MessageRepository
 
     public Message CreateMessage(string Messages, string Username, int RoomId)
     {
-        string sql = $@"
+        string sql = @"
         INSERT INTO webchat.messages (messages, username, roomid) 
         VALUES (@Messages, @Username, @RoomId)
-        RETURNING  messageid as {nameof(Message.MessageId)},
-                messages as {nameof(Message.Messages)},
-                username as {nameof(Message.Username)},
-                roomid as {nameof(Message.RoomId)}
-        ";
+        RETURNING  messageid as MessageId,
+                messages as Messages,
+                username as Username,
+                roomid as RoomId
+    ";
+
         using (var conn = _dataSource.OpenConnection())
         {
             return conn.QueryFirst<Message>(sql, new { Messages, Username, RoomId });
         }
     }
-}
+
 
 public class MessagesFeedQuery
 {
