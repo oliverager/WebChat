@@ -16,11 +16,11 @@ public class MessageRepository
     public IEnumerable<MessagesFeedQuery> GetMassageFeed()
     {
         string sql = $@"
-    SELECT messageId as {nameof(MessagesFeedQuery.MessageId)}
+        SELECT messageId as {nameof(MessagesFeedQuery.MessageId)}
         messages as {nameof(MessagesFeedQuery.Messages)},
         username as {nameof(MessagesFeedQuery.Username)},
         roomId as {nameof(MessagesFeedQuery.RoomId)}
-    FROM webchat.messages;
+        FROM webchat.messages;
     ";
         using (var conn = _dataSource.OpenConnection())
         {
@@ -31,9 +31,9 @@ public class MessageRepository
     public Message CreateMessage(string Messages, string Username, int RoomId)
     {
         string sql = $@"
-        INSERT INTO webchat.messages (messageid, messages, username, roomid) 
-        VALUES (@MessageId, @Messages, @Username, @RoomId)
-        RETURNING messageid as {nameof(Message.MessageId)},
+        INSERT INTO webchat.messages (messages, username, roomid) 
+        VALUES (@Messages, @Username, @RoomId)
+        RETURNING  messageid as {nameof(Message.MessageId)},
                 messages as {nameof(Message.Messages)},
                 username as {nameof(Message.Username)},
                 roomid as {nameof(Message.RoomId)}
