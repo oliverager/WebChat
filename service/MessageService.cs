@@ -17,7 +17,7 @@ public class MessageService
         return _messageRepository.GetMassageFeed();
     }
 
-    public Message CreateMessage(string Messages, string Username, int RoomId)
+    public Message StoreMessage(string Messages, string Username, int RoomId)
     {
         return _messageRepository.CreateMessage(Messages, Username, RoomId);
     }

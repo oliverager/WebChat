@@ -11,22 +11,38 @@ public class ClientWantsToBroadcastToRoomDto : BaseDto
     public int roomId { get; set; }
 }
 
-public class ClientWantsToBroadcastToRoom(MessageService messageService) : BaseEventHandler<ClientWantsToBroadcastToRoomDto>
+public class ClientWantsToBroadcastToRoom : BaseEventHandler<ClientWantsToBroadcastToRoomDto>
 {
+    private readonly MessageService _messageService;
+
+    public ClientWantsToBroadcastToRoom(MessageService messageService)
+    {
+        _messageService = messageService;
+    }
+
     public override Task Handle(ClientWantsToBroadcastToRoomDto dto, IWebSocketConnection socket)
     {
-        var message = new ServerBroadcastsMessageWithUsername()
+        try
         {
-            message = dto.message,
-            username = WebSocketStateService.Connections[socket.ConnectionInfo.Id].Username
-            
-            
-        };
-        WebSocketStateService.BroadcastToRoom(dto.roomId, JsonSerializer.Serialize(
-            message));
+            var message = new ServerBroadcastsMessageWithUsername()
+            {
+                message = dto.message,
+                username = WebSocketStateService.Connections[socket.ConnectionInfo.Id].Username
+            };
+
+            _messageService.StoreMessage(dto.message, message.username, dto.roomId);
+
+            WebSocketStateService.BroadcastToRoom(dto.roomId, JsonSerializer.Serialize(message));
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error handling client broadcast request: {ex.Message}");
+        }
+
         return Task.CompletedTask;
     }
 }
+
 
 public class ServerBroadcastsMessageWithUsername : BaseDto
 {
