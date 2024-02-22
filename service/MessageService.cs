@@ -12,7 +12,7 @@ public class MessageService
         _messageRepository = messageRepository;
     }
 
-    public IEnumerable<MessagesFeedQuery> GetMassageFeed()
+    public IEnumerable<MessageRepository.MessagesFeedQuery> GetMassageFeed()
     {
         return _messageRepository.GetMassageFeed();
     }

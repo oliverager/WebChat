@@ -46,10 +46,11 @@ public class MessageRepository
     }
 
 
-public class MessagesFeedQuery
-{
-    public int MessageId { get; set; }
-    public string Messages { get; set; }
-    public string Username { get; set; }
-    public int RoomId { get; set; }
+    public class MessagesFeedQuery
+    {
+        public int MessageId { get; set; }
+        public string Messages { get; set; }
+        public string Username { get; set; }
+        public int RoomId { get; set; }
+    }
 }

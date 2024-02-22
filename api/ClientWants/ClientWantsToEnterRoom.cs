@@ -27,6 +27,6 @@ public class ClientWantsToEnterRoom(MessageService messageService) : BaseEventHa
 }
 public class ServerAddsClientToRoom : BaseDto
 {
-    public IEnumerable<MessagesFeedQuery> messages { get; set; }
+    public IEnumerable<MessageRepository.MessagesFeedQuery> messages { get; set; }
     public String message { get; set; }
 }
