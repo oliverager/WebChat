@@ -31,7 +31,7 @@ public class ClientWantsToBroadcastToRoom : BaseEventHandler<ClientWantsToBroadc
             };
 
             _messageService.StoreMessage(dto.message, message.username, dto.roomId);
-
+            
             WebSocketStateService.BroadcastToRoom(dto.roomId, JsonSerializer.Serialize(message));
         }
         catch (Exception ex)

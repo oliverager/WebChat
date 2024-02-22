@@ -4,6 +4,7 @@ using Fleck;
 using infastructure;
 using infastructure.Repositories;
 using lib;
+using Npgsql;
 using service;
 
 public static class Startup
@@ -19,8 +20,16 @@ public static class Startup
         var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-        
+        if (builder.Environment.IsDevelopment())
+        {
+            builder.Services.AddNpgsqlDataSource(Utilities.ProperlyFormattedConnectionString,
+                dataSourceBuilder => dataSourceBuilder.EnableParameterLogging());
+        }
 
+        if (builder.Environment.IsProduction())
+        {
+            builder.Services.AddNpgsqlDataSource(Utilities.ProperlyFormattedConnectionString);
+        }
 
         builder.Services.AddSingleton<MessageRepository>();
         builder.Services.AddSingleton<MessageService>();
