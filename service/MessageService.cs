@@ -14,7 +14,18 @@ public class MessageService
 
     public IEnumerable<MessageRepository.MessagesFeedQuery> GetMassageFeed()
     {
-        return _messageRepository.GetMassageFeed();
+        var messageFeed = _messageRepository.GetMessageFeed();
+        
+        foreach (var message in messageFeed)
+        {
+            Console.WriteLine($"Message ID: {message.MessageId}");
+            Console.WriteLine($"Message: {message.Messages}");
+            Console.WriteLine($"Username: {message.Username}");
+            Console.WriteLine($"Room ID: {message.RoomId}");
+            Console.WriteLine();
+        }
+
+        return messageFeed;
     }
 
     public Message StoreMessage(string Messages, string Username, int RoomId)
