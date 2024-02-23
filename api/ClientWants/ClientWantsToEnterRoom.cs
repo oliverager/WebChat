@@ -19,7 +19,7 @@ public class ClientWantsToEnterRoom(MessageService messageService) : BaseEventHa
         socket.Send(JsonSerializer.Serialize(new ServerAddsClientToRoom()
         {
             message = "you were succesfully added to room with ID " + dto.roomId,
-            messages =         messageService.GetMassageFeed()
+            messages =         messageService.GetMassageFeed(dto.roomId)
 
         }));
         return Task.CompletedTask;

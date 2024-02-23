@@ -12,19 +12,20 @@ public class MessageRepository
     {
         _dataSource = dataSource;
     }
-
-    public IEnumerable<MessagesFeedQuery> GetMessageFeed()
+    
+    public IEnumerable<MessagesFeedQuery> GetMessageFeed(int roomId)
     {
         string sql = $@"
         SELECT messageId as {nameof(MessagesFeedQuery.MessageId)},
         messages as {nameof(MessagesFeedQuery.Messages)},
         username as {nameof(MessagesFeedQuery.Username)},
         roomId as {nameof(MessagesFeedQuery.RoomId)}
-        FROM webchat.messages;
+        FROM webchat.messages
+        WHERE roomId = @RoomId;
     ";
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.Query<MessagesFeedQuery>(sql);
+            return conn.Query<MessagesFeedQuery>(sql, new { RoomId = roomId });
         }
     }
     

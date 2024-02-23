@@ -12,10 +12,11 @@ public class MessageService
         _messageRepository = messageRepository;
     }
 
-    public IEnumerable<MessageRepository.MessagesFeedQuery> GetMassageFeed()
+    public IEnumerable<MessageRepository.MessagesFeedQuery> GetMassageFeed(int roomId)
     {
-        var messageFeed = _messageRepository.GetMessageFeed();
         
+        var messageFeed = _messageRepository.GetMessageFeed(roomId);
+         
         foreach (var message in messageFeed)
         {
             Console.WriteLine($"Message ID: {message.MessageId}");
