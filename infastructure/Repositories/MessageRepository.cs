@@ -13,10 +13,10 @@ public class MessageRepository
         _dataSource = dataSource;
     }
 
-    public IEnumerable<MessagesFeedQuery> GetMassageFeed()
+    public IEnumerable<MessagesFeedQuery> GetMessageFeed()
     {
         string sql = $@"
-        SELECT messageId as {nameof(MessagesFeedQuery.MessageId)}
+        SELECT messageId as {nameof(MessagesFeedQuery.MessageId)},
         messages as {nameof(MessagesFeedQuery.Messages)},
         username as {nameof(MessagesFeedQuery.Username)},
         roomId as {nameof(MessagesFeedQuery.RoomId)}
